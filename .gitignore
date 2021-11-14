@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+Audio
+Commands
+Old Files
+ffmpeg
+
 # User-specific files
 *.rsuser
 *.suo

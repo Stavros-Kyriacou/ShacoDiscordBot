@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.IO;
+using Discord;
+using Discord.WebSocket;
+using DSharpPlus.VoiceNext;
 
-namespace ShacoDiscordBot
+namespace RustyKnife
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var bot = new Bot();
+            bot.RunAsync().GetAwaiter().GetResult();
         }
     }
 }
