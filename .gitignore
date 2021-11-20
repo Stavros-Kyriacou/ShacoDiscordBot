@@ -7,6 +7,7 @@ Audio
 Old Files
 ffmpeg
 config.json
+save.json
 
 # User-specific files
 *.rsuser
