@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace RustyKnife
+namespace ShacoDiscordBot
 {
     public struct ConfigJson
     {
