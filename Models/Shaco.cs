@@ -1,6 +1,6 @@
 using System;
 
-namespace RustyKnife
+namespace ShacoDiscordBot
 {
     public static class Shaco
     {
