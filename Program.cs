@@ -5,7 +5,7 @@ using Discord;
 using Discord.WebSocket;
 using DSharpPlus.VoiceNext;
 
-namespace RustyKnife
+namespace ShacoDiscordBot
 {
     class Program
     {
