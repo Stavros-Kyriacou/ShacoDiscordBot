@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.VoiceNext;
 
-namespace RustyKnife
+namespace ShacoDiscordBot
 {
     public class RandomCommands : BaseCommandModule
     {
