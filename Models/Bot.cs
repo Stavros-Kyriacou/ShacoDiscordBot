@@ -21,7 +21,6 @@ namespace ShacoDiscordBot
         public CommandsNextExtension Commands { get; private set; }
         public VoiceNextExtension Voice { get; private set; }
         public GameController GameController {get; private set;}
-        // public List<User> users = new List<User>();
         public async Task RunAsync()
         {
             var json = "";
@@ -64,11 +63,9 @@ namespace ShacoDiscordBot
             this.Commands.RegisterCommands<VoiceCommands>();
             this.Commands.RegisterCommands<GameCommands>();
 
-            // GameCommands commands = new GameCommands(this.GameController);
-
             this.Voice = Client.UseVoiceNext();
 
-            await this.GameController.Load();
+            await GameManager.Load();
 
             await this.Client.ConnectAsync();
 
