@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using DSharpPlus.EventArgs;
+
 
 namespace ShacoDiscordBot
 {
@@ -24,6 +26,17 @@ namespace ShacoDiscordBot
             StartingGold = 0;
             CollectionCooldown = 60;
             Users = new List<User>();
+        }
+        public static async Task MessageHandler(object sender, MessageCreateEventArgs e)
+        {
+            if (!e.Author.IsBot)
+            {
+                var user = GetUserById(e.Author.Id);
+                if (user != null)
+                {
+                    await AddGold(user);
+                }
+            }
         }
         public static async Task Load()
         {
