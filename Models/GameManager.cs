@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -8,56 +9,80 @@ namespace ShacoDiscordBot
 {
     public static class GameManager
     {
-        public static string test = "test string";
-        public static List<User> users = new List<User>();
+        //Setup
         private static string saveFile = "save.json";
+        public static List<User> Users { get; private set; }
+
+        //Game Variables
+        public static int MessageEarnings { get; private set; }
+
+        public static int StartingGold { get; private set; }
+        public static int CollectionCooldown { get; private set; }
+        static GameManager()
+        {
+            MessageEarnings = 10;
+            StartingGold = 0;
+            CollectionCooldown = 60;
+            Users = new List<User>();
+        }
         public static async Task Load()
         {
             await Task.Run(() =>
             {
                 var jsonData = File.ReadAllText(saveFile);
-                users = JsonConvert.DeserializeObject<List<User>>(jsonData);
+                Users = JsonConvert.DeserializeObject<List<User>>(jsonData);
+                if (Users == null)
+                {
+                    Users = new List<User>();
+                }
             });
         }
         public static async Task Save()
         {
-            string jsonString = System.Text.Json.JsonSerializer.Serialize(users);
             await Task.Run(() =>
             {
+                string jsonString = System.Text.Json.JsonSerializer.Serialize(Users);
                 File.WriteAllText(saveFile, jsonString);
             });
         }
-        public static async Task AddGold()
+        public static async Task AddGold(User user)
         {
             await Task.Run(() =>
             {
-
+                TimeSpan duration = DateTime.Now - user.LastGoldCollectionTime;
+                if (duration.TotalSeconds >= CollectionCooldown)
+                {
+                    user.Gold += MessageEarnings;
+                    user.TimesCollected++;
+                    user.LastGoldCollectionTime = DateTime.Now;
+                }
             });
+            await Save();
         }
-        public static async Task JoinGame()
+        public static User GetUserById(ulong userId)
         {
-            await Task.Run(() =>
+            foreach (var u in Users)
             {
-
-            });
+                if (u.ID == userId)
+                {
+                    return u;
+                }
+            }
+            return null;
         }
-        public static async Task Profile()
+        public static bool HasProfile(ulong userId)
         {
-            await Task.Run(() =>
+            if (Users != null)
             {
-
-            });
-        }
-        public static async Task Give()
-        {
-            await Task.Run(() =>
-            {
-
-            });
-        }
-        public static int GetInt()
-        {
-            return 1;
+                foreach (var u in Users)
+                {
+                    if (u.ID == userId)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
