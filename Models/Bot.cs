@@ -20,7 +20,6 @@ namespace ShacoDiscordBot
         public DiscordClient Client { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
         public VoiceNextExtension Voice { get; private set; }
-        public GameController GameController {get; private set;}
         public async Task RunAsync()
         {
             var json = "";
@@ -42,11 +41,10 @@ namespace ShacoDiscordBot
                 AutoReconnect = true,
                 MinimumLogLevel = LogLevel.Debug
             };
-            this.GameController = new GameController();
 
             this.Client = new DiscordClient(config);
 
-            this.Client.MessageCreated += GameController.MessageHandler;
+            this.Client.MessageCreated += GameManager.MessageHandler;
             this.Client.Ready += OnClientReady;
 
             var commandsConfig = new CommandsNextConfiguration
