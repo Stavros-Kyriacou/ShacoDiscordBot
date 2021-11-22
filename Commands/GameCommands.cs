@@ -29,17 +29,19 @@ namespace ShacoDiscordBot
         public async Task Profile(CommandContext ctx)
         {
             var user = GameManager.GetUserById(ctx.Message.Author.Id);
+            var embed = UserProfile(user)
+                        .WithThumbnail(ctx.Message.Author.AvatarUrl, 100, 100);
 
-            await ctx.RespondAsync(embed: UserProfile(user));
+            await ctx.RespondAsync(embed: embed);
         }
         [Command("allprofiles")]
         public async Task AllProfiles(CommandContext ctx)
         {
             if (ctx.Message.Author.Id == 257448897746698241)
             {
-                foreach (var u in GameManager.Users)
+                foreach (var user in GameManager.Users)
                 {
-                    await ctx.RespondAsync(UserProfile(u));
+                    await ctx.RespondAsync(UserProfile(user));
                 }
             }
             else
@@ -87,12 +89,19 @@ namespace ShacoDiscordBot
         }
         public DiscordEmbedBuilder UserProfile(User user)
         {
-            return new DiscordEmbedBuilder
+            var embed = new DiscordEmbedBuilder
             {
                 Title = $"{user.UserName}'s Profile",
-                Description = $"Gold: {user.Gold}\nTimes Collected: {user.TimesCollected}\nGold Gifted: {user.GoldGifted}\nGold Received: {user.GoldReceived}\nLast Collection TIme: {user.LastGoldCollectionTime}\nNext Collection Time: {user.LastGoldCollectionTime.AddSeconds(GameManager.CollectionCooldown)}",
                 Color = DiscordColor.Red
             };
+            embed.AddField("Gold", user.Gold.ToString())
+                    .AddField("Times Collected", user.TimesCollected.ToString())
+                    .AddField("Gold Gifted", user.GoldGifted.ToString())
+                    .AddField("Gold Received", user.GoldReceived.ToString())
+                    .AddField("Last Collection Time", user.LastGoldCollectionTime.ToString())
+                    .AddField("Next Collection TIme", user.LastGoldCollectionTime.AddSeconds(GameManager.CollectionCooldown).ToString());
+            embed.WithFooter(Shaco.RandomVoiceLine().Description);
+            return embed; 
         }
     }
 }
