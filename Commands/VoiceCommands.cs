@@ -68,6 +68,11 @@ namespace ShacoDiscordBot
         {
             await Play(ctx, $@"Audio\Smooth.mp3", "Playing Smooth B)");
         }
+        [Command("monitor")]
+        public async Task Monitor(CommandContext ctx)
+        {
+            await Play(ctx, $@"Audio\Monitor.ogg", "I'm gonna break my monitor, I swear!");
+        }
 
 
 
