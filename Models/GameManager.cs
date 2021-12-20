@@ -49,6 +49,7 @@ namespace ShacoDiscordBot
                     Users = new List<User>();
                 }
             });
+            await Save();
         }
         public static async Task Save()
         {
@@ -62,12 +63,12 @@ namespace ShacoDiscordBot
         {
             await Task.Run(() =>
             {
-                TimeSpan duration = DateTime.Now - user.LastGoldCollectionTime;
-                if (duration.TotalSeconds >= CollectionCooldown)
+                TimeSpan duration = DateTime.Now - user.LastCollectionTime;
+                if (duration.TotalSeconds >= user.CollectionCooldown)
                 {
-                    user.Gold += MessageEarnings;
+                    user.Gold += user.CollectionAmount;
                     user.TimesCollected++;
-                    user.LastGoldCollectionTime = DateTime.Now;
+                    user.LastCollectionTime = DateTime.Now;
                 }
             });
             await Save();
