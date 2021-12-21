@@ -7,6 +7,7 @@ namespace ShacoDiscordBot
         public ulong ID { get; private set; }
         public string UserName { get; private set; }
         public int Gold { get; set; }
+        public int GoldGenerated { get; set; }
         public int CollectionLevel { get; set; }
         public int CollectionAmount
         {
