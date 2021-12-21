@@ -55,8 +55,9 @@ namespace ShacoDiscordBot
         {
             await Task.Run(() =>
             {
-                string jsonString = System.Text.Json.JsonSerializer.Serialize(Users);
-                File.WriteAllText(saveFile, jsonString);
+                // string jsonString = System.Text.Json.JsonSerializer.Serialize(Users);
+                string json = JsonConvert.SerializeObject(Users, Formatting.Indented);
+                File.WriteAllText(saveFile, json);
             });
         }
         public static async Task AddGold(User user)
@@ -66,6 +67,7 @@ namespace ShacoDiscordBot
                 TimeSpan duration = DateTime.Now - user.LastCollectionTime;
                 if (duration.TotalSeconds >= user.CollectionCooldown)
                 {
+                    user.GoldGenerated += user.CollectionAmount;
                     user.Gold += user.CollectionAmount;
                     user.TimesCollected++;
                     user.LastCollectionTime = DateTime.Now;
