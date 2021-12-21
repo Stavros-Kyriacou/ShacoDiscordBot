@@ -200,9 +200,9 @@ namespace ShacoDiscordBot
                 default:
                     break;
             }
-
         }
         [Command("leaderboard")]
+        [Description("Display leaderboards for various stats")]
         public async Task Leaderboard(CommandContext ctx)
         {
             var embed = new DiscordEmbedBuilder
@@ -219,7 +219,8 @@ namespace ShacoDiscordBot
             await ctx.RespondAsync(embed: embed);
         }
         [Command("leaderboard")]
-        public async Task Leaderboard(CommandContext ctx, string type)
+        [Description("Display leaderboards for various stats")]
+        public async Task Leaderboard(CommandContext ctx, [Description("Leaderboard stat types: total, spent, gifted, received")] string stat)
         {
             List<User> leaders = new List<User>();
 
@@ -228,23 +229,14 @@ namespace ShacoDiscordBot
                 Color = DiscordColor.Green
             };
 
-            switch (type)
+            switch (stat)
             {
                 case "total":
-                    List<UserGoldTotal> goldTotals = new List<UserGoldTotal>();
-                    foreach (var u in GameManager.Users)
+                    leaders = GameManager.Users.OrderByDescending(u => u.GoldGenerated).ToList();
+                    embed.Title = "Gold Generated Leaderboard";
+                    for (int i = 0; i < leaders.Count; i++)
                     {
-                        goldTotals.Add(new UserGoldTotal
-                        {
-                            username = u.UserName,
-                            goldGenerated = u.Gold + u.GoldSpent + u.GoldGifted
-                        });
-                    }
-                    var goldTotalsLeaderboard = goldTotals.OrderByDescending(u => u.goldGenerated).ToList();
-                    embed.Title = "Total Gold Generated Leaderboard";
-                    for (int i = 0; i < goldTotalsLeaderboard.Count; i++)
-                    {
-                        embed.AddField($"{i + 1}. {goldTotalsLeaderboard[i].username}", goldTotalsLeaderboard[i].goldGenerated.ToString());
+                        embed.AddField($"{i + 1}. {leaders[i].UserName}", leaders[i].GoldGenerated.ToString());
                     }
                     break;
                 case "spent":
@@ -275,13 +267,7 @@ namespace ShacoDiscordBot
                     break;
             }
 
-
             await ctx.RespondAsync(embed: embed);
-        }
-        struct UserGoldTotal
-        {
-            public string username;
-            public int goldGenerated;
         }
     }
 }
