@@ -16,7 +16,7 @@ namespace ShacoDiscordBot
                 if (this.CollectionLevel == 1)
                     return 10;
                 else
-                    return 10 + (this.CollectionLevel * this.CollectionLevel);
+                    return (5 * this.CollectionLevel) + (this.CollectionLevel * this.CollectionLevel);
             }
             private set { }
         }
