@@ -31,12 +31,26 @@ namespace ShacoDiscordBot
         public int TimesCollected { get; set; }
         public DateTime LastCollectionTime { get; set; }
         public int CooldownLevel { get; set; }
-        public int CooldownMaxLevel { get; private set; }
+        public int CooldownMaxLevel
+        {
+            get
+            {
+                return 20;
+            }
+            private set { }
+        }
         public int CollectionCooldown
         {
             get
             {
-                return 600 - (5 * this.CooldownLevel);
+                if (this.CooldownLevel == 1)
+                {
+                    return 600;
+                }
+                else
+                {
+                    return 600 - (30 * (this.CooldownLevel - 1));
+                }
             }
             private set { }
         }
@@ -44,7 +58,7 @@ namespace ShacoDiscordBot
         {
             get
             {
-                return 25 * (this.CooldownLevel * this.CooldownLevel);
+                return 75 * (this.CooldownLevel * this.CooldownLevel);
             }
             private set { }
         }
@@ -58,7 +72,6 @@ namespace ShacoDiscordBot
             this.Gold = 0;
             this.CollectionLevel = 1;
             this.CooldownLevel = 1;
-            this.CooldownMaxLevel = 100;
             this.TimesCollected = 0;
             this.LastCollectionTime = DateTime.Now;
             this.GoldGifted = 0;
