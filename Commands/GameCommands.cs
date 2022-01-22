@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DSharpPlus.Entities;
 using System;
 using System.Linq;
+using DSharpPlus.Interactivity.Extensions;
 
 namespace ShacoDiscordBot
 {
@@ -26,15 +27,59 @@ namespace ShacoDiscordBot
                 await ctx.RespondAsync("You already have a game profile!");
             }
         }
-        [Command("profile")]
-        public async Task Profile(CommandContext ctx)
-        {
-            var user = GameManager.GetUserById(ctx.Message.Author.Id);
-            var embed = UserProfile(user)
-                        .WithThumbnail(ctx.Message.Author.AvatarUrl, 100, 100);
 
+        [Command("profile")]
+        [Description("Display user profile information")]
+        public async Task Profile(CommandContext ctx, [Description("Leave empty for short profile, type \"?profile full\" to display full profile")] params string[] args)
+        {
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
+            var user = GameManager.GetUserById(ctx.Message.Author.Id);
+
+            if (args.Length == 0)
+            {
+                embed = UserProfile(user)
+                        .WithThumbnail(ctx.Message.Author.AvatarUrl, 100, 100);
+            }
+            else if (args[0] == "full")
+            {
+                embed = UserProfileFull(user)
+                        .WithThumbnail(ctx.Message.Author.AvatarUrl, 100, 100);
+            }
             await ctx.RespondAsync(embed: embed);
         }
+
+        [Command("findprofile")]
+        public async Task FindProfile(CommandContext ctx)
+        {
+            var interactivity = ctx.Client.GetInteractivity();
+
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = "Find User Profile",
+                Color = DiscordColor.Green
+            };
+            var users = GameManager.Users;
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                embed.AddField($"{users[i].UserName}", $"{i + 1}");
+            }
+
+            await ctx.RespondAsync(embed: embed);
+            var message = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author == ctx.Message.Author);
+
+
+            if (int.TryParse(message.Result.Content, out int index))
+            {
+                if (index > 0 && index <= users.Count)
+                {
+                    var user = GameManager.GetUserById(users[index - 1].ID);
+                    var profileEmbed = UserProfile(user);
+                    await ctx.RespondAsync(embed: profileEmbed);
+                }
+            }
+        }
+
         [Command("allprofiles")]
         public async Task AllProfiles(CommandContext ctx)
         {
@@ -42,14 +87,15 @@ namespace ShacoDiscordBot
             {
                 foreach (var user in GameManager.Users)
                 {
-                    await ctx.RespondAsync(UserProfile(user));
+                    await ctx.RespondAsync(UserProfileFull(user));
                 }
             }
             else
             {
-                await ctx.RespondAsync("You do not have permission to use this command :(");
+                await ctx.RespondAsync(Shaco.PermissionMessage);
             }
         }
+
         [Command("gift")]
         public async Task Gift(CommandContext ctx, int amount, DiscordMember mention)
         {
@@ -77,17 +123,49 @@ namespace ShacoDiscordBot
                 await ctx.RespondAsync($"Insufficient Funds. {sender.UserName}'s current funds: {sender.Gold}");
             }
         }
+
         [Command("test")]
-        public async Task Test(CommandContext ctx)
+        public async Task Test(CommandContext ctx, DiscordUser targetUser)
         {
-            var span = new TimeSpan(0, 0, 61);
-            var minutes = span.Duration().Minutes;
-            var seconds = span.Duration().Seconds;
-            string time = $"{minutes}m {seconds}s";
-            await ctx.Channel.SendMessageAsync(time);
-            await ctx.Channel.SendMessageAsync("end");
+            if (ctx.Message.Author.Id == 257448897746698241)
+            {
+                await ctx.RespondAsync($"Username: {targetUser.Username} ID: {targetUser.Id}");
+            }
+            else
+            {
+                await ctx.RespondAsync(Shaco.PermissionMessage);
+            }
         }
+
         public DiscordEmbedBuilder UserProfile(User user)
+        {
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = $"{user.UserName}'s Profile",
+                Color = DiscordColor.Red
+            };
+
+            var span = user.LastCollectionTime.AddSeconds(user.CollectionCooldown) - user.LastCollectionTime;
+            var cooldown = $"{span.Duration().Minutes}m {span.Duration().Seconds}s";
+
+            embed.AddField("Gold", user.Gold.ToString(), true)
+                    .AddField("Next Collection TIme", user.LastCollectionTime.AddSeconds(user.CollectionCooldown).ToString(), true)
+                    .AddField("\u200b", "\u200b") //empty space
+
+                    .AddField("Collection Amount", user.CollectionAmount.ToString(), true)
+                    .AddField("Level", user.CollectionLevel.ToString(), true)
+                    .AddField("Upgrade Cost", user.CollectionUpgradeCost.ToString(), true)
+                    .AddField("\u200b", "\u200b") //empty space
+
+                    .AddField("Collection Cooldown", cooldown, true)
+                    .AddField("Level", user.CooldownLevel.ToString(), true)
+                    .AddField("Upgrade Cost", user.CooldownUpgradeCost.ToString(), true)
+                    ;
+            embed.WithFooter(Shaco.RandomVoiceLine().Description);
+            return embed;
+        }
+
+        public DiscordEmbedBuilder UserProfileFull(User user)
         {
             var embed = new DiscordEmbedBuilder
             {
@@ -121,6 +199,7 @@ namespace ShacoDiscordBot
             embed.WithFooter(Shaco.RandomVoiceLine().Description);
             return embed;
         }
+
         public DiscordEmbedBuilder UserShop(User user)
         {
             var embed = new DiscordEmbedBuilder
@@ -146,6 +225,7 @@ namespace ShacoDiscordBot
             embed.WithFooter(Shaco.RandomVoiceLine().Description);
             return embed;
         }
+
         [Command("shop")]
         [Description("View upgrades available for purchase. Use ?buy {shopNumber} to purchase upgrades")]
         public async Task Shop(CommandContext ctx)
@@ -154,6 +234,7 @@ namespace ShacoDiscordBot
             var embed = UserShop(user);
             await ctx.RespondAsync(embed: embed);
         }
+
         [Command("buy")]
         [Description("Purchase gold collection and cooldown upgrades. Use ?shop to view upgrades available for purchase")]
         public async Task Buy(CommandContext ctx, [Description("The number of the shop item. Use ?shop to view upgrades available for purchase")] int shopNumber)
@@ -174,7 +255,8 @@ namespace ShacoDiscordBot
                     }
                     else
                     {
-                        await ctx.RespondAsync("Not enough funds :(");
+                        var difference = user.CollectionUpgradeCost - user.Gold;
+                        await ctx.RespondAsync("Not enough funds :(\n" + difference + " Gold short");
                     }
                     break;
                 case 2:
@@ -194,13 +276,15 @@ namespace ShacoDiscordBot
                     }
                     else
                     {
-                        await ctx.RespondAsync("Not enough funds :(");
+                        var difference = user.CooldownUpgradeCost - user.Gold;
+                        await ctx.RespondAsync("Not enough funds :(\n" + difference + " Gold short");
                     }
                     break;
                 default:
                     break;
             }
         }
+
         [Command("leaderboard")]
         [Description("Display leaderboards for various stats")]
         public async Task Leaderboard(CommandContext ctx)
@@ -218,6 +302,7 @@ namespace ShacoDiscordBot
             }
             await ctx.RespondAsync(embed: embed);
         }
+        
         [Command("leaderboard")]
         [Description("Display leaderboards for various stats")]
         public async Task Leaderboard(CommandContext ctx, [Description("Leaderboard stat types: total, spent, gifted, received")] string stat)
@@ -261,6 +346,14 @@ namespace ShacoDiscordBot
                     for (int i = 0; i < leaders.Count; i++)
                     {
                         embed.AddField($"{i + 1}. {leaders[i].UserName}", leaders[i].GoldReceived.ToString());
+                    }
+                    break;
+                case "collected":
+                    leaders = GameManager.Users.OrderByDescending(u => u.TimesCollected).ToList();
+                    embed.Title = "Times Collected Leaderboard";
+                    for (int i = 0; i < leaders.Count; i++)
+                    {
+                        embed.AddField($"{i + 1}. {leaders[i].UserName}", leaders[i].TimesCollected.ToString());
                     }
                     break;
                 default:
