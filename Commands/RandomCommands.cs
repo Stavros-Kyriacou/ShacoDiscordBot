@@ -14,10 +14,15 @@ namespace ShacoDiscordBot
 
         [Command("add")]
         [Description("Adds two numbers")]
-        public async Task Add(CommandContext ctx, [Description("First Number")] int num1, [Description("Second Number")] int num2)
+        public async Task Add(CommandContext ctx, params int[] numbers)
         {
+            int total = 0;
+            foreach (var n in numbers)
+            {
+                total += n;
+            }
             await ctx.Channel
-                .SendMessageAsync((num1 + num2).ToString())
+                .SendMessageAsync(total.ToString())
                 .ConfigureAwait(false);
         }
         [Command("quote")]
