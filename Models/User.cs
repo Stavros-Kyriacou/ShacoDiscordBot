@@ -69,7 +69,7 @@ namespace ShacoDiscordBot
         {
             this.ID = Id;
             this.UserName = username;
-            this.Gold = 0;
+            this.Gold = 100;
             this.CollectionLevel = 1;
             this.CooldownLevel = 1;
             this.TimesCollected = 0;
