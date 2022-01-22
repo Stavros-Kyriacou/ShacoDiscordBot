@@ -22,6 +22,7 @@ namespace ShacoDiscordBot
             new VoiceLine{Path = $@"Audio\Laugh3.ogg", Description = ":laughing:"},
 
         };
+        public static string PermissionMessage = "You do not have permission to use this command, bitchass";
         public static VoiceLine RandomVoiceLine()
         {
             Random rand = new Random();
