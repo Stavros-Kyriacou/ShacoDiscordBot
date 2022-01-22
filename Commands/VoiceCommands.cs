@@ -73,7 +73,36 @@ namespace ShacoDiscordBot
         {
             await Play(ctx, $@"Audio\Monitor.ogg", "I'm gonna break my monitor, I swear!");
         }
-
+        [Command("coin")]
+        public async Task Coin(CommandContext ctx)
+        {
+            await Play(ctx, $@"Audio\five_coin.ogg", "What are you willing to do for 5 coin boy?");
+        }
+        [Command("moonlight")]
+        public async Task Moonlight(CommandContext ctx)
+        {
+            await Play(ctx, $@"Audio\pale_moonlight.ogg", "Have you ever danced with the devil, in the pale moonlight?");
+        }
+        [Command("wpgg")]
+        public async Task WPGG(CommandContext ctx)
+        {
+            await Play(ctx, $@"Audio\wpgg.ogg", "wp gg 😁 joking 😂 We shilling 😎 Solobolo 😱");
+        }
+        [Command("pipes")]
+        public async Task Pipes(CommandContext ctx)
+        {
+            await Play(ctx, $@"Audio\pipes.ogg", "I'll give you a sample of my pipes, boy...");
+        }
+        [Command("bike")]
+        public async Task Bike(CommandContext ctx)
+        {
+            await Play(ctx, $@"Audio\bike.ogg", "If my grandmother had wheels she would have been a bike");
+        }
+        [Command("limbo")]
+        public async Task Limbo(CommandContext ctx)
+        {
+            await Play(ctx, $@"Audio\limbo.ogg", "How low can I go?");
+        }
 
 
         // [Command("playquote"), Description("Plays a Shaco quote in a voice channel. Use ?join command for bot to join channel")]
@@ -373,6 +402,6 @@ namespace ShacoDiscordBot
         //     if (exc != null)
         //         await ctx.RespondAsync($"An exception occured during playback: `{exc.GetType()}: {exc.Message}`");
         // }
-    
+
     }
 }
