@@ -13,11 +13,14 @@ namespace ShacoDiscordBot
     {
         //Setup
         private static string saveFile = "save.json";
+        private static string lootBoxDataFile = "lootbox_data.json";
         public static List<User> Users { get; private set; }
-        
+        public static List<Lootbox> LootBoxes { get; private set; }
+
         static GameManager()
         {
             Users = new List<User>();
+            LootBoxes = new List<Lootbox>();
         }
         public static async Task MessageHandler(object sender, MessageCreateEventArgs e)
         {
@@ -50,6 +53,23 @@ namespace ShacoDiscordBot
                 // string jsonString = System.Text.Json.JsonSerializer.Serialize(Users);
                 string json = JsonConvert.SerializeObject(Users, Formatting.Indented);
                 File.WriteAllText(saveFile, json);
+            });
+        }
+        public static async Task LoadLootBoxData()
+        {
+            await Task.Run(() =>
+            {
+                var jsonData = File.ReadAllText(lootBoxDataFile);
+                LootBoxes = JsonConvert.DeserializeObject<List<Lootbox>>(jsonData);
+            });
+        }
+        public static async Task SaveLootBoxData()
+        {
+            await Task.Run(() =>
+            {
+                // string jsonString = System.Text.Json.JsonSerializer.Serialize(Users);
+                string json = JsonConvert.SerializeObject(LootBoxes, Formatting.Indented);
+                File.WriteAllText(lootBoxDataFile, json);
             });
         }
         public static async Task AddGold(User user)
