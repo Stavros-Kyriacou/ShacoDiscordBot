@@ -9,6 +9,18 @@ namespace ShacoDiscordBot
         public int Gold { get; set; }
         public int GoldGenerated { get; set; }
         public int CollectionLevel { get; set; }
+        public int TimesCollected { get; set; }
+        public DateTime LastCollectionTime { get; set; }
+        public int CooldownLevel { get; set; }
+        public int GoldGifted { get; set; }
+        public int GoldReceived { get; set; }
+        public int GoldSpent { get; set; }
+        public int[] LootBoxInventory { get; set; }
+        public int LootBoxesOpened { get; set; }
+        public int GoldSpentOnLootBoxes { get; set; }
+        public int GoldWonFromLootBoxes { get; set; }
+        public int BoxesWonFromLootBoxes { get; set; }
+        public int MostGoldWonFromLootBox { get; set; }
         public int CollectionAmount
         {
             get
@@ -28,9 +40,6 @@ namespace ShacoDiscordBot
             }
             private set { }
         }
-        public int TimesCollected { get; set; }
-        public DateTime LastCollectionTime { get; set; }
-        public int CooldownLevel { get; set; }
         public int CooldownMaxLevel
         {
             get
@@ -62,9 +71,6 @@ namespace ShacoDiscordBot
             }
             private set { }
         }
-        public int GoldGifted { get; set; }
-        public int GoldReceived { get; set; }
-        public int GoldSpent { get; set; }
         public User(ulong Id, string username)
         {
             this.ID = Id;
@@ -76,6 +82,13 @@ namespace ShacoDiscordBot
             this.LastCollectionTime = DateTime.Now;
             this.GoldGifted = 0;
             this.GoldReceived = 0;
+            this.LootBoxInventory = new int[6];
+            this.LootBoxInventory[0] = 1;
+            this.LootBoxesOpened = 0;
+            this.GoldSpentOnLootBoxes = 0;
+            this.GoldWonFromLootBoxes = 0;
+            this.BoxesWonFromLootBoxes = 0;
+            this.MostGoldWonFromLootBox = 0;
         }
     }
 }
