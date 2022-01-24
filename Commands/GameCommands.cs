@@ -123,20 +123,7 @@ namespace ShacoDiscordBot
                 await ctx.RespondAsync($"Insufficient Funds. {sender.UserName}'s current funds: {sender.Gold}");
             }
         }
-
-        [Command("test")]
-        public async Task Test(CommandContext ctx, DiscordUser targetUser)
-        {
-            if (ctx.Message.Author.Id == 257448897746698241)
-            {
-                await ctx.RespondAsync($"Username: {targetUser.Username} ID: {targetUser.Id}");
-            }
-            else
-            {
-                await ctx.RespondAsync(Shaco.PermissionMessage);
-            }
-        }
-
+        
         public DiscordEmbedBuilder UserProfile(User user)
         {
             var embed = new DiscordEmbedBuilder
