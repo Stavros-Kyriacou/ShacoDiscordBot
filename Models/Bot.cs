@@ -63,13 +63,16 @@ namespace ShacoDiscordBot
 
             this.Commands = Client.UseCommandsNext(commandsConfig);
 
+            this.Commands.RegisterCommands<TestCommands>();
             this.Commands.RegisterCommands<RandomCommands>();
             this.Commands.RegisterCommands<VoiceCommands>();
             this.Commands.RegisterCommands<GameCommands>();
+            this.Commands.RegisterCommands<LootBoxCommands>();
 
             this.Voice = Client.UseVoiceNext();
 
             await GameManager.Load();
+            await GameManager.LoadLootBoxData();
 
             await this.Client.ConnectAsync();
 
