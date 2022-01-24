@@ -14,17 +14,9 @@ namespace ShacoDiscordBot
         //Setup
         private static string saveFile = "save.json";
         public static List<User> Users { get; private set; }
-
-        //Game Variables
-        public static int MessageEarnings { get; private set; }
-
-        public static int StartingGold { get; private set; }
-        public static int CollectionCooldown { get; private set; }
+        
         static GameManager()
         {
-            MessageEarnings = 10;
-            StartingGold = 0;
-            CollectionCooldown = 60;
             Users = new List<User>();
         }
         public static async Task MessageHandler(object sender, MessageCreateEventArgs e)
