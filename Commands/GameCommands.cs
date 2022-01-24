@@ -62,7 +62,7 @@ namespace ShacoDiscordBot
 
             for (int i = 0; i < users.Count; i++)
             {
-                embed.AddField($"{users[i].UserName}", $"{i + 1}");
+                embed.AddField($"{i + 1}. {users[i].UserName}", "----------------");
             }
 
             await ctx.RespondAsync(embed: embed);
@@ -250,7 +250,18 @@ namespace ShacoDiscordBot
                         user.GoldSpent += user.CollectionUpgradeCost;
                         user.CollectionLevel++;
 
-                        await ctx.RespondAsync("Gold Collection Upgrade Purchased!");
+                        var embed = new DiscordEmbedBuilder
+                        {
+                            Title = "Gold Collection Upgrade Purchased!",
+                            Color = DiscordColor.Green
+                        };
+
+                        embed.AddField("Gold", user.Gold.ToString(), true)
+                                .AddField("Collection Amount", user.CollectionAmount.ToString(), true)
+                                .AddField("Level", user.CollectionLevel.ToString(), true)
+                                .AddField("Upgrade Cost", user.CollectionUpgradeCost.ToString(), true);
+
+                        await ctx.RespondAsync(embed: embed);
                         await GameManager.Save();
                     }
                     else
@@ -271,7 +282,20 @@ namespace ShacoDiscordBot
                         user.GoldSpent += user.CooldownUpgradeCost;
                         user.CooldownLevel++;
 
-                        await ctx.RespondAsync("Gold Collection Cooldown Upgrade Purchased!");
+                        var embed = new DiscordEmbedBuilder
+                        {
+                            Title = "Gold Collection Cooldown Upgrade Purchased!",
+                            Color = DiscordColor.Green
+                        };
+                        var span = user.LastCollectionTime.AddSeconds(user.CollectionCooldown) - user.LastCollectionTime;
+                        var cooldown = $"{span.Duration().Minutes}m {span.Duration().Seconds}s";
+
+                        embed.AddField("Gold", user.Gold.ToString(), true)
+                                .AddField("Collection Cooldown", cooldown, true)
+                                .AddField("Level", user.CooldownLevel.ToString(), true)
+                                .AddField("Upgrade Cost", user.CooldownUpgradeCost.ToString(), true);
+
+                        await ctx.RespondAsync(embed: embed);
                         await GameManager.Save();
                     }
                     else
@@ -302,10 +326,10 @@ namespace ShacoDiscordBot
             }
             await ctx.RespondAsync(embed: embed);
         }
-        
+
         [Command("leaderboard")]
-        [Description("Display leaderboards for various stats")]
-        public async Task Leaderboard(CommandContext ctx, [Description("Leaderboard stat types: total, spent, gifted, received")] string stat)
+        [Description("Display leaderboards for various stats. Enter a stat filter to change leaderboard type")]
+        public async Task Leaderboard(CommandContext ctx, [Description("Leaderboard stat filters: total, spent, gifted, received, collected")] string stat)
         {
             List<User> leaders = new List<User>();
 
