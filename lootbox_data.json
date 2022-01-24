@@ -1,0 +1,50 @@
+[
+    {
+        "Cost" : 200,
+        "NumberOfRewards": 1,
+        "RewardTypeWeights": [97, 3],
+        "GoldRewardValues" : [100, 130, 160, 200, 230, 260, 300],
+        "GoldRewardWeights" : [15, 20, 25, 25, 20, 15, 5],
+        "LootboxRewardWeights": [400, 300, 75, 20, 10, 1]
+    },
+    {
+        "Cost" : 500,
+        "NumberOfRewards": 2,
+        "RewardTypeWeights": [97, 3],
+        "GoldRewardValues" : [210, 225, 240, 260, 280, 290, 300],
+        "GoldRewardWeights" : [15, 20, 25, 25, 20, 15, 5],
+        "LootboxRewardWeights": [400, 300, 75, 20, 10, 1]
+    },
+    {
+        "Cost" : 1000,
+        "NumberOfRewards": 3,
+        "RewardTypeWeights": [97, 3],
+        "GoldRewardValues" : [260, 290, 360, 450, 480, 500, 560],
+        "GoldRewardWeights" : [15, 20, 25, 25, 20, 15, 5],
+        "LootboxRewardWeights": [400, 300, 75, 20, 10, 1]
+    },
+    {
+        "Cost" : 2000,
+        "NumberOfRewards": 4,
+        "RewardTypeWeights": [96, 4],
+        "GoldRewardValues" : [400, 450, 550, 600, 625, 650, 750],
+        "GoldRewardWeights" : [15, 20, 25, 25, 20, 15, 5],
+        "LootboxRewardWeights": [400, 300, 75, 20, 10, 1]
+    },
+    {
+        "Cost" : 5000,
+        "NumberOfRewards": 4,
+        "RewardTypeWeights": [96, 4],
+        "GoldRewardValues" : [1125, 1200, 1300, 1330, 1360, 1400, 1475],
+        "GoldRewardWeights" : [15, 20, 25, 25, 20, 15, 5],
+        "LootboxRewardWeights": [400, 300, 75, 20, 10, 1]
+    },
+    {
+        "Cost" : 1000,
+        "NumberOfRewards": 6,
+        "RewardTypeWeights": [95, 5],
+        "GoldRewardValues" : [1500, 1580, 1750, 1790, 1830, 2000, 2160],
+        "GoldRewardWeights" : [15, 20, 25, 25, 20, 15, 5],
+        "LootboxRewardWeights": [400, 300, 75, 20, 10, 1]
+    }
+]
