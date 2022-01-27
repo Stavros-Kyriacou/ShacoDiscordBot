@@ -2,11 +2,11 @@
   {
     "ID": 257448897746698241,
     "UserName": "Bibius",
-    "Gold": 28368,
-    "GoldGenerated": 555272,
+    "Gold": 31168,
+    "GoldGenerated": 558072,
     "CollectionLevel": 35,
-    "TimesCollected": 1013,
-    "LastCollectionTime": "2022-01-27T23:07:12.8074458+11:00",
+    "TimesCollected": 1015,
+    "LastCollectionTime": "2022-01-27T23:32:57.1901835+11:00",
     "CooldownLevel": 16,
     "GoldGifted": 128858,
     "GoldReceived": 46394,
@@ -27,8 +27,8 @@
     "CollectionAmount": 1400,
     "CollectionUpgradeCost": 30625,
     "CooldownMaxLevel": 20,
-    "CollectionCooldown": 150,
-    "CooldownUpgradeCost": 19200
+    "CollectionCooldown": 456,
+    "CooldownUpgradeCost": 15360
   },
   {
     "ID": 204113793138163712,
@@ -58,17 +58,17 @@
     "CollectionAmount": 806,
     "CollectionUpgradeCost": 16900,
     "CooldownMaxLevel": 20,
-    "CollectionCooldown": 90,
-    "CooldownUpgradeCost": 24300
+    "CollectionCooldown": 438,
+    "CooldownUpgradeCost": 19440
   },
   {
     "ID": 254146609527521282,
     "UserName": "ViSaxual",
-    "Gold": 96250,
-    "GoldGenerated": 1075985,
+    "Gold": 139000,
+    "GoldGenerated": 1118735,
     "CollectionLevel": 45,
-    "TimesCollected": 1454,
-    "LastCollectionTime": "2022-01-27T23:07:50.1501069+11:00",
+    "TimesCollected": 1473,
+    "LastCollectionTime": "2022-01-27T23:29:15.7387289+11:00",
     "CooldownLevel": 20,
     "GoldGifted": 97034,
     "GoldReceived": 36499,
@@ -89,8 +89,8 @@
     "CollectionAmount": 2250,
     "CollectionUpgradeCost": 50625,
     "CooldownMaxLevel": 20,
-    "CollectionCooldown": 30,
-    "CooldownUpgradeCost": 30000
+    "CollectionCooldown": 420,
+    "CooldownUpgradeCost": 24000
   },
   {
     "ID": 269059148690358272,
@@ -120,8 +120,8 @@
     "CollectionAmount": 456,
     "CollectionUpgradeCost": 9025,
     "CooldownMaxLevel": 20,
-    "CollectionCooldown": 450,
-    "CooldownUpgradeCost": 2700
+    "CollectionCooldown": 546,
+    "CooldownUpgradeCost": 2160
   },
   {
     "ID": 167962403068313601,
@@ -151,8 +151,8 @@
     "CollectionAmount": 176,
     "CollectionUpgradeCost": 3025,
     "CooldownMaxLevel": 20,
-    "CollectionCooldown": 480,
-    "CooldownUpgradeCost": 1875
+    "CollectionCooldown": 555,
+    "CooldownUpgradeCost": 1500
   },
   {
     "ID": 268980109073973250,
@@ -183,7 +183,7 @@
     "CollectionUpgradeCost": 900,
     "CooldownMaxLevel": 20,
     "CollectionCooldown": 600,
-    "CooldownUpgradeCost": 75
+    "CooldownUpgradeCost": 60
   },
   {
     "ID": 183529056489308162,
@@ -213,8 +213,8 @@
     "CollectionAmount": 456,
     "CollectionUpgradeCost": 9025,
     "CooldownMaxLevel": 20,
-    "CollectionCooldown": 480,
-    "CooldownUpgradeCost": 1875
+    "CollectionCooldown": 555,
+    "CooldownUpgradeCost": 1500
   },
   {
     "ID": 272345283030024193,
@@ -244,8 +244,8 @@
     "CollectionAmount": 66,
     "CollectionUpgradeCost": 900,
     "CooldownMaxLevel": 20,
-    "CollectionCooldown": 540,
-    "CooldownUpgradeCost": 675
+    "CollectionCooldown": 573,
+    "CooldownUpgradeCost": 540
   },
   {
     "ID": 169425477684035585,
@@ -275,7 +275,7 @@
     "CollectionAmount": 14,
     "CollectionUpgradeCost": 100,
     "CooldownMaxLevel": 20,
-    "CollectionCooldown": 510,
-    "CooldownUpgradeCost": 1200
+    "CollectionCooldown": 564,
+    "CooldownUpgradeCost": 960
   }
 ]
