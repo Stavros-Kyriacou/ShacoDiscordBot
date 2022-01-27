@@ -70,5 +70,56 @@ namespace ShacoDiscordBot
                 }
             }
         }
+        [Command("buybox")]
+        public async Task BuyBox(CommandContext ctx)
+        {
+            var interactivity = ctx.Client.GetInteractivity();
+            var user = GameManager.GetUserById(ctx.Message.Author.Id);
+
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = "Select Box to Purchase",
+                Color = DiscordColor.Blurple
+            };
+            embed.WithFooter("Enter a number between 1-6 to buy that type of box");
+
+            for (int i = 0; i < user.LootBoxInventory.Length; i++)
+            {
+                embed.AddField($"{i + 1}. Lootbox cost: {GameManager.LootBoxes[i].Cost} gold", $"Owned: {user.LootBoxInventory[i].ToString()}");
+            }
+
+            await ctx.RespondAsync(embed: embed);
+
+            var message = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author == ctx.Message.Author);
+
+            if (int.TryParse(message.Result.Content, out int index))
+            {
+                if (index > 0 && index <= 6)
+                {
+                    //check if enough gold
+                    if (user.Gold >= GameManager.LootBoxes[index - 1].Cost)
+                    {
+                        //subtract gold cost
+                        user.Gold -= GameManager.LootBoxes[index - 1].Cost;
+                        //add to inventory
+                        user.LootBoxInventory[index - 1]++;
+                        //add user stats
+                        user.GoldSpentOnLootBoxes += GameManager.LootBoxes[index - 1].Cost;
+                        user.GoldSpent += GameManager.LootBoxes[index - 1].Cost;
+                        await ctx.RespondAsync("Lootbox Purchased!");
+                        await GameManager.Save();
+                    }
+                    else
+                    {
+                        var difference = GameManager.LootBoxes[index - 1].Cost - user.Gold;
+                        await ctx.RespondAsync("Not enough funds :(\n" + difference + " Gold short");
+                    }
+                }
+                else
+                {
+                    await ctx.RespondAsync("Invalid argument");
+                }
+            }
+        }
     }
 }
