@@ -99,6 +99,11 @@ namespace ShacoDiscordBot
         [Command("gift")]
         public async Task Gift(CommandContext ctx, int amount, DiscordMember mention)
         {
+            if (amount < 0)
+            {
+                amount *= -1;
+            }
+            
             var sender = GameManager.GetUserById(ctx.Message.Author.Id);
             var receiver = GameManager.GetUserById(mention.Id);
 
