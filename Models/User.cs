@@ -56,9 +56,17 @@ namespace ShacoDiscordBot
                 {
                     return 600;
                 }
+                else if (this.CooldownLevel > 1 && this.CooldownLevel <= 20)
+                {
+                    return 600 - (this.CooldownLevel * 9);
+                }
+                else if (this.CooldownLevel > 20 && this.CooldownLevel <= 50)
+                {
+                    return 360 + (2 * (50 - this.CooldownLevel));
+                }
                 else
                 {
-                    return 600 - (30 * (this.CooldownLevel - 1));
+                    return 300 + (110 - this.CooldownLevel);
                 }
             }
             private set { }
@@ -67,7 +75,18 @@ namespace ShacoDiscordBot
         {
             get
             {
-                return 75 * (this.CooldownLevel * this.CooldownLevel);
+                if (this.CooldownLevel >= 1 && this.CooldownLevel <= 20)
+                {
+                    return 60 * (this.CooldownLevel * this.CooldownLevel);
+                }
+                else if (this.CooldownLevel > 20 && this.CooldownLevel <= 50)
+                {
+                    return 70 * (this.CooldownLevel * this.CooldownLevel);
+                }
+                else
+                {
+                    return 80 * (this.CooldownLevel * this.CooldownLevel);
+                }
             }
             private set { }
         }
