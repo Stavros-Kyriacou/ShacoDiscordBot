@@ -17,27 +17,26 @@ namespace ShacoDiscordBot
         {
             if (ctx.Message.Author.Id == 257448897746698241)
             {
-                await ctx.RespondAsync(GameManager.LootBoxes.Count.ToString());
-                foreach (var box in GameManager.LootBoxes)
+                var embed = new DiscordEmbedBuilder
                 {
-                    string rewardTypeWeights = string.Join(",", box.RewardTypeWeights.Select(x => x.ToString()).ToArray());
-                    string goldRewardValues = string.Join(",", box.GoldRewardValues.Select(x => x.ToString()).ToArray());
-                    string goldRewardWeights = string.Join(",", box.GoldRewardWeights.Select(x => x.ToString()).ToArray());
-                    string lootboxRewardWeights = string.Join(",", box.LootboxRewardWeights.Select(x => x.ToString()).ToArray());
+                    Title = "Test :)"
+                };
 
-                    await ctx.RespondAsync($"Cost: {box.Cost}, Num Rewards: {box.NumberOfRewards.ToString()}, RewardTypeWeights: {rewardTypeWeights}, GoldRewardValues: {goldRewardValues}, GoldRewardWeights: {goldRewardWeights}, LootboxRewardWeights: {lootboxRewardWeights}");
-                }
+                var user = new User(1, "test");
 
-                // var user = GameManager.GetUserById(ctx.Message.Author.Id);
-                // await ctx.RespondAsync($"Number of lootboxes: {user.LootBoxInventory[0]}");
-                // var box = new Lootbox
-                // {
-                //     Cost = 1,
+                embed.AddField($"Level: {user.CooldownLevel}", $"CD: {user.CollectionCooldown} Cost: {user.CooldownUpgradeCost}");
 
-                // };
+                user.CooldownLevel = 20;
+                embed.AddField($"Level: {user.CooldownLevel}", $"CD: {user.CollectionCooldown} Cost: {user.CooldownUpgradeCost}");
 
-                // await ctx.RespondAsync($"{GameManager.LootBoxes[0].Cost}");
-                // await ctx.RespondAsync($"{GameManager.LootBoxes[0].NumberOfRewards}");
+                user.CooldownLevel = 50;
+                embed.AddField($"Level: {user.CooldownLevel}", $"CD: {user.CollectionCooldown} Cost: {user.CooldownUpgradeCost}");
+
+                user.CooldownLevel = 110;
+                embed.AddField($"Level: {user.CooldownLevel}", $"CD: {user.CollectionCooldown} Cost: {user.CooldownUpgradeCost}");
+
+                
+                await ctx.RespondAsync(embed: embed);
             }
             else
             {
