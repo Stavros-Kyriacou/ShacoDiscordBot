@@ -265,7 +265,7 @@ namespace ShacoDiscordBot
                 case 2:
                     if (user.CooldownLevel >= user.CooldownMaxLevel)
                     {
-                        await ctx.RespondAsync("Cooldown Upgrade at Max Level!\nNo Furthar Upgrades Available");
+                        await ctx.RespondAsync("Cooldown Upgrade at Max Level!\nNo Further Upgrades Available");
                         break;
                     }
                     if (user.Gold >= user.CooldownUpgradeCost)
@@ -321,7 +321,7 @@ namespace ShacoDiscordBot
 
         [Command("leaderboard")]
         [Description("Display leaderboards for various stats. Enter a stat filter to change leaderboard type")]
-        public async Task Leaderboard(CommandContext ctx, [Description("Leaderboard stat filters: total, spent, gifted, received, collected")] string stat)
+        public async Task Leaderboard(CommandContext ctx, [Description("Leaderboard stat filters: generated, spent, gifted, received, collected")] string stat)
         {
             List<User> leaders = new List<User>();
 
@@ -332,7 +332,7 @@ namespace ShacoDiscordBot
 
             switch (stat)
             {
-                case "total":
+                case "generated":
                     leaders = GameManager.Users.OrderByDescending(u => u.GoldGenerated).ToList();
                     embed.Title = "Gold Generated Leaderboard";
                     for (int i = 0; i < leaders.Count; i++)
