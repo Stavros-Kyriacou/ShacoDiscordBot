@@ -44,7 +44,7 @@ namespace ShacoDiscordBot
         {
             get
             {
-                return 20;
+                return 110;
             }
             private set { }
         }
@@ -77,15 +77,15 @@ namespace ShacoDiscordBot
             {
                 if (this.CooldownLevel >= 1 && this.CooldownLevel <= 20)
                 {
-                    return 60 * (this.CooldownLevel * this.CooldownLevel);
+                    return 50 * (this.CooldownLevel * this.CooldownLevel);
                 }
                 else if (this.CooldownLevel > 20 && this.CooldownLevel <= 50)
                 {
-                    return 70 * (this.CooldownLevel * this.CooldownLevel);
+                    return 60 * (this.CooldownLevel * this.CooldownLevel);
                 }
                 else
                 {
-                    return 80 * (this.CooldownLevel * this.CooldownLevel);
+                    return 70 * (this.CooldownLevel * this.CooldownLevel);
                 }
             }
             private set { }
