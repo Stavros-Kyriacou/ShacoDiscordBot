@@ -109,5 +109,12 @@ namespace ShacoDiscordBot
             this.BoxesWonFromLootBoxes = 0;
             this.MostGoldWonFromLootBox = 0;
         }
+        public string CollectionTimeRemaining()
+        {
+            var NextCollectionTime = this.LastCollectionTime.AddSeconds(this.CollectionCooldown);
+            var CooldownRemaining = NextCollectionTime - DateTime.Now;
+
+            return $"{CooldownRemaining.Duration().Minutes}m {CooldownRemaining.Duration().Seconds}s";
+        }
     }
 }
