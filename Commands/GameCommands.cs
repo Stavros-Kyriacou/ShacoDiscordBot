@@ -141,7 +141,7 @@ namespace ShacoDiscordBot
             var cooldown = $"{span.Duration().Minutes}m {span.Duration().Seconds}s";
 
             embed.AddField("Gold", user.Gold.ToString(), true)
-                    .AddField("Next Collection TIme", user.LastCollectionTime.AddSeconds(user.CollectionCooldown).ToString(), true)
+                    .AddField("Collection Cooldown Remaining", user.CollectionTimeRemaining(), true)
                     .AddField("\u200b", "\u200b") //empty space
 
                     .AddField("Collection Amount", user.CollectionAmount.ToString(), true)
@@ -174,7 +174,7 @@ namespace ShacoDiscordBot
                     .AddField("Gold Received", user.GoldReceived.ToString(), true)
                     .AddField("\u200b", "\u200b") //empty space
 
-                    .AddField("Next Collection TIme", user.LastCollectionTime.AddSeconds(user.CollectionCooldown).ToString(), true)
+                    .AddField("Collection Cooldown Remaining", user.CollectionTimeRemaining(), true)
                     .AddField("Last Collection Time", user.LastCollectionTime.ToString(), true)
                     .AddField("Times Collected", user.TimesCollected.ToString(), true)
                     .AddField("\u200b", "\u200b") //empty space
