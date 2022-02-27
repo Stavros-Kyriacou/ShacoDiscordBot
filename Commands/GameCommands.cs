@@ -35,6 +35,30 @@ namespace ShacoDiscordBot
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             var user = GameManager.GetUserById(ctx.Message.Author.Id);
 
+            if (args.Length != 0)
+                args[0].ToLower();
+
+            if (args.Length == 0)
+            {
+                embed = UserProfile(user)
+                        .WithThumbnail(ctx.Message.Author.AvatarUrl, 100, 100);
+            }
+            else if (args[0] == "full")
+            {
+                embed = UserProfileFull(user)
+                        .WithThumbnail(ctx.Message.Author.AvatarUrl, 100, 100);
+            }
+            await ctx.RespondAsync(embed: embed);
+        }
+        [Command("p")]
+        public async Task P(CommandContext ctx, [Description("Leave empty for short profile, type \"?profile full\" to display full profile")] params string[] args)
+        {
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
+            var user = GameManager.GetUserById(ctx.Message.Author.Id);
+
+            if (args.Length != 0)
+                args[0].ToLower();
+
             if (args.Length == 0)
             {
                 embed = UserProfile(user)
@@ -103,7 +127,7 @@ namespace ShacoDiscordBot
             {
                 amount *= -1;
             }
-            
+
             var sender = GameManager.GetUserById(ctx.Message.Author.Id);
             var receiver = GameManager.GetUserById(mention.Id);
 
@@ -128,7 +152,7 @@ namespace ShacoDiscordBot
                 await ctx.RespondAsync($"Insufficient Funds. {sender.UserName}'s current funds: {sender.Gold}");
             }
         }
-        
+
         public DiscordEmbedBuilder UserProfile(User user)
         {
             var embed = new DiscordEmbedBuilder
