@@ -108,6 +108,11 @@ namespace ShacoDiscordBot
         {
             await Play(ctx, $@"Audio\soup.ogg", "Wtf dude? No soup?");
         }
+        [Command("burger")]
+        public async Task Burger(CommandContext ctx)
+        {
+            await Play(ctx, $@"Audio\burger.ogg", "You need to sear the burger, we don't boil it, how many times I fucking told you to do that? EHH!?!?");
+        }
 
 
         // [Command("playquote"), Description("Plays a Shaco quote in a voice channel. Use ?join command for bot to join channel")]

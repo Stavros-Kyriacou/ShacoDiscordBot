@@ -76,5 +76,10 @@ namespace ShacoDiscordBot
         {
             await ctx.RespondAsync("We have found that prioritising Collection Cooldown upgrades has led to some unhealthy gameplay patterns amongst high levels of play. As a result we are tuning back the minimum cooldown from 30 seconds to 5 minutes and increasing the price of each upgrade.");
         }
+        [Command("poo")]
+        public async Task Poo(CommandContext ctx)
+        {
+            await ctx.RespondAsync(":poop:");
+        }
     }
 }
